@@ -8,12 +8,12 @@
 </head>
 <body>
 
-	<?php include 'D:\Projects\PHP\HomeSwitchHome\onValidation.php';?>
+	<?php include 'onValidation.php';?>
 	<h1 class="tituloRegistro"> Home switch home </h1>
 	<form method="post" action="<?php 
 		echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	<div class="recuadroLogin">
-		<h3 class="tituloTerciario"> Ingresar </h3>
+		<h3 class="tituloTerciario"> Ingresar con codigo </h3>
 		<div class="divInput">
 			<label class="letraBlancaDivs">Codigo de acceso: </label>
 			<input type="text" name="code" id="user" placeholder="Access code" class="inputText">

@@ -20,7 +20,7 @@ body{
 }
 .letraBlancaDivs{
 	color: white;
-	font-family: cursive;
+	font-family: arial;
 }
 .divInput{
 	margin: 10px;
@@ -36,9 +36,10 @@ body{
 	text-shadow: 7px 6px black;
 }
 .tituloTerciario{
-	margin-left: 90px;
+	margin-left: 50px;
 	color: white;
-	font-size: 30px;
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
 	margin-bottom: 20px;
 
 }
@@ -49,7 +50,7 @@ body{
 .botonIngreso{
 	border-radius: 20px;
 	border: 3px solid red;
-	font-family: cursive;
+	font-family: arial;
 	width: 170px;
 	margin-left: 70px;
 	margin-top: 20px;
