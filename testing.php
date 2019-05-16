@@ -1,16 +1,19 @@
 <?php
 
 function no_errors($posibleErrors) {
-	$error_collector = array(count($posibleErrors));
-	$found = '';
-	$i = 1;
-	foreach ($posibleErrors as $key => $value)
-		$error_collector[$i++] = $value;
-	while($i < count($error_collector) && $found == '')
-		$found = $error_collector[$i++];
-	if ($found != '')
+	$errors  = array('hotelcode' => '',
+		  			'hotelname' => '',
+	 	  			'hotelprovince' => '',
+	 	  			'hotelcity' => '',
+	 	  			'hotelnumberaddr' => '', 
+	 	  			'hoteladdress' => '', 
+	 	  			'hoteldescription' => '',
+	 	  			'hotelimage');
+	if (count(array_intersect_assoc($errors, $posibleErrors)) == 8)
+		return 1;
+	else
 		return 0;
-	return 1;
+
 }
 
 function isType($file_type, $current_type)	{
