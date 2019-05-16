@@ -24,6 +24,12 @@ function isImage()	{
 	}
 }
 
+function get_file_to_upload() {
+	$target_dir = "images\\";
+	//File to upload.
+	return "images\\".basename($_FILES["fileToUpload"]["name"]);
+}
+
 function full_image_validation(){
 	//Current directory where the file is located.
 	$target_dir = "images\\";
