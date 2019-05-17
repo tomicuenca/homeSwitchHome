@@ -1,0 +1,65 @@
+body{
+	background-image: url(inicio_imagen-fondo.jpg);
+	background-size: 80%; 
+}
+
+h1{
+	font-family: Bradley Hand ITC;
+	color: blue;
+	font-size: 100px;
+	text-shadow: 1px 3px 1px black;
+}
+
+h2{
+	margin-top: 350px;
+	font-size: 60px;
+	font-family: Bowlby One SC;
+	color: pink;
+	text-shadow: 1px 2px 1px white;
+}
+
+td{
+	font-family: Bowlby One SC;
+	color: #0951b7;
+}
+
+form{
+	background-color: cyan;
+	box-shadow: 1px 1px 20px white;
+	width: 380px;
+	padding: 20px;
+	border: 6px solid #0951b7;
+	border-radius: 10px;
+
+}
+
+#central{
+	margin-top: 300px;
+}
+
+#acento{
+	opacity: 0;
+}
+
+#ingCod{
+	margin-left: 5px;
+	font-family: Bowlby One SC;
+	border: 3px solid black;
+	border-radius: 2px;
+}
+
+#boton{
+	margin-top: 15px;
+	font-family: Bowlby One SC;
+	background-color: #0951b7;
+	color: white;
+	border: 3px solid blue;
+	border-radius: 2px;
+}
+
+#boton:hover{
+	background-color: white;
+	color: black;
+	border: 3px solid #0951b7;
+	cursor: pointer;
+}
