@@ -4,12 +4,14 @@ body{
 }
 
 h1{
-	margin-top: 250px;
+	margin-top: 350px;
 	font-size: 60px;
 	font-family: Bowlby One SC;
 	color: pink;
 	text-shadow: 1px 2px 1px white;
 }
+
+/*
 
 h2{
 	font-family: Bowlby One SC;
@@ -38,7 +40,6 @@ a{
 	opacity: 0;
 }
 
-/*
 
 td{
 	font-family: Bowlby One SC;
