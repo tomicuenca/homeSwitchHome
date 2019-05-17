@@ -1,0 +1,215 @@
+﻿SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+
+
+-- -----------------------------------------------------
+-- Table `administrador`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `administrador` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `numeroempleado` INT NOT NULL ,
+  `contraseña` TEXT NOT NULL ,
+  `DNI` INT NOT NULL ,
+  `fechadenacimiento` DATE NOT NULL ,
+  `direccion` TEXT NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `hotel`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `hotel` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `titulo` TEXT NOT NULL ,
+  `descripcion` TEXT NOT NULL ,
+  `provincia` TEXT NOT NULL ,
+  `ciudad` TEXT NOT NULL ,
+  `calle` TEXT NOT NULL ,
+  `numero` INT NOT NULL ,
+  `estrellas` INT NOT NULL ,
+`codigo` INT NOT NULL ,
+`imagen` LONGBLOB ,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tarjeta`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `tarjeta` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `numero` INT NOT NULL ,
+  `cvv` INT NOT NULL ,
+  `fechadevencimiento` DATE NOT NULL ,
+  `direcciondefacturacion` TEXT NOT NULL ,
+  `telefono` INT NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `clientebasico`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `clientebasico` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `nombre` TEXT NOT NULL ,
+  `fechaDeNacimiento` DATE NOT NULL ,
+  `email` TEXT NOT NULL ,
+  `localidad` TEXT NOT NULL ,
+  `contraseña` TEXT NOT NULL ,
+  `tarjeta_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_tarjeta` (`tarjeta_id` ASC) ,
+  CONSTRAINT `fk_tarjeta`
+    FOREIGN KEY (`tarjeta_id` )
+    REFERENCES `tarjeta` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `clienpremium`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `clienpremium` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `creditos` INT NOT NULL ,
+  `clientebasico_id` INT NOT NULL , 
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_clientebasico` (`clientebasico_id` ASC) ,
+  CONSTRAINT `fk_clientebasico`
+    FOREIGN KEY (`clientebasico_id` )
+    REFERENCES `clientebasico` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB; 
+
+
+-- -----------------------------------------------------
+-- Table `semana`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `semana` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `fechadeinicio` DATE NOT NULL ,
+  `idhabitacion` INT NOT NULL ,
+  `hotel_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_hotel` (`hotel_id` ASC) ,
+  CONSTRAINT `fk_hotel`
+    FOREIGN KEY (`hotel_id` )
+    REFERENCES `hotel` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `hotsale`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `hotsale` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `precio` INT NOT NULL ,
+  `semana_id` INT NOT NULL ,  
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_semanahotsale` (`semana_id` ASC) ,
+  CONSTRAINT `fk_semanahotsale`
+    FOREIGN KEY (`semana_id` )
+    REFERENCES `semana` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `subasta`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `subasta` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `pujaactual` INT NOT NULL ,
+  `fechalimite` DATE NOT NULL ,
+  `semana_id` INT NOT NULL ,  
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_semanasubasta` (`semana_id` ASC) ,
+  CONSTRAINT `fk_semanasubasta`
+    FOREIGN KEY (`semana_id` )
+    REFERENCES `semana` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `clientebasicosemana`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `clientebasicosemana` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `precio` INT NOT NULL ,
+  `clientebasico_id` INT NOT NULL ,
+  `semana_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_clientedesemana` (`clientebasico_id` ASC) ,
+  INDEX `fk_semanadecliente` (`semana_id` ASC) ,
+  CONSTRAINT `fk_clientedesemana`
+    FOREIGN KEY (`clientebasico_id` )
+    REFERENCES `clientebasico` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_semanadecliente`
+    FOREIGN KEY (`semana_id` )
+    REFERENCES `semana` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `clientebasicosubasta`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `clientebasicosubasta` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `clientebasico_id` INT NOT NULL ,
+  `monto` INT NOT NULL ,	
+  `subasta_id` INT NOT NULL ,  
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_clientedesubasta` (`clientebasico_id` ASC) ,
+  INDEX `fk_subastadecliente` (`subasta_id` ASC) ,
+  CONSTRAINT `fk_clientedesubasta`
+    FOREIGN KEY (`clientebasico_id` )
+    REFERENCES `clientebasico` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_subastadecliente`
+    FOREIGN KEY (`subasta_id` )
+    REFERENCES `subasta` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `semanahotel`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `semanahotel` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `hotel_id` INT NOT NULL ,
+  `semana_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_hoteldesemana` (`hotel_id` ASC) ,
+  INDEX `fk_semanadehotel` (`semana_id` ASC) ,
+  CONSTRAINT `fk_hoteldesemana`
+    FOREIGN KEY (`hotel_id` )
+    REFERENCES `hotel` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_semanadehotel`
+    FOREIGN KEY (`semana_id` )
+    REFERENCES `semana` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
